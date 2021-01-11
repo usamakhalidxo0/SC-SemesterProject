@@ -280,7 +280,14 @@ public class AddBookJframe extends JFrame {
 		JButton ADDbookbutton = new JButton("ADD");
 		ADDbookbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Book obj=new Book();
+				obj.setBookId(bookIDtextField.getText().toString());
+				obj.setBookName(booknametextField_1.getText().toString());
+				obj.setAuthorName(bookauthornametextField_2.getText().toString());
+				obj.setDescription(bookdescriptiontextField_3.getText().toString());
+				obj.setStatus(true);
+				String message=obj.AddBook();
+				 JOptionPane.showMessageDialog(null,message);
 			}
 		});
 		ADDbookbutton.addMouseListener(new MouseAdapter() {

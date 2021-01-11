@@ -1,3 +1,4 @@
+package theframes;
 import java.sql.*;
 import java.time.temporal.ChronoUnit;
 import java.text.SimpleDateFormat;
@@ -5,7 +6,7 @@ import java.util.Date;
 
 
 public class Book {
-	private long  bookId;
+	private String bookId;
 	private String bookName;
 	private String authorName;
 	private String Description;
@@ -21,17 +22,17 @@ public class Book {
 	{
 		con=DBMSConnection.establishedConnetion();
 	}
-	public Book(long bookId,String bookName, String AuthorName, String Description)
+	public Book(String bookId,String bookName, String AuthorName, String Description)
 	{
 		this.bookId=bookId;
 		this.bookName=bookName;
 		this.authorName=AuthorName;
 		this.Description=Description;
 	}
-	public long getBookId() {
+	public String getBookId() {
 		return bookId;
 	}
-	public void setBookId(long bookId) {
+	public void setBookId(String bookId) {
 		this.bookId = bookId;
 	}
 	public String getBookName() {
@@ -52,26 +53,28 @@ public class Book {
 	public void setDescription(String description) {
 		Description = description;
 	}
-	public boolean AddBook() 
+	public String AddBook() 
 	{
+		String addMessage=null;
 		try {
 				
 				String query = " insert into book (idBook, BookName, Author, description, status)"
 				        + " values (?, ?, ?, ?, ?)";
 				PreparedStatement preparedStmt =con.prepareStatement(query);
-				preparedStmt.setLong(1, this.bookId);
+				preparedStmt.setString(1, this.bookId);
 			    preparedStmt.setString (2, this.bookName);
 			    preparedStmt.setString(3, this.authorName);
 		        preparedStmt.setString(4, this.Description);
 		        preparedStmt.setBoolean(5, this.status);
 			    preparedStmt.execute();
-			    System.out.println("successfuly stored");
+			    addMessage="book successfuly Added ";
 	      }
 		catch(Exception ex)
 		{
 			System.out.println(ex.getLocalizedMessage());
+			addMessage="Book is already added..";
 		}
-		return true;
+		return addMessage;
 	}
 	public boolean deleteBook()
 	{
@@ -79,7 +82,7 @@ public class Book {
 		
 		String query = "delete from book where idbook = ?";
 	      PreparedStatement preparedStmt = con.prepareStatement(query);
-	      preparedStmt.setLong(1,this.bookId);
+	      preparedStmt.setString(1,this.bookId);
 	      preparedStmt.execute();
 	      System.out.println("Delete successfully");
 		}
@@ -105,7 +108,7 @@ public class Book {
 								String query = "update book set status = ? where idBook = ?";
 							    PreparedStatement preparedStmt = con.prepareStatement(query);
 							    preparedStmt.setBoolean(1, true);
-							    preparedStmt.setLong(2, this.bookId);
+							    preparedStmt.setString(2, this.bookId);
 							    preparedStmt.execute();
 							    query = " insert into issuetable(bookId, Enrollement, issueDate)"
 									        + " values (?, ?, ?)";

@@ -1,11 +1,11 @@
+package theframes;
 
-
-import java.sql.*;
 public class Main {
 
 	public static void main(String[] args) {
 		
 		Book obj=new Book();
+		
 		java.util.Date date=new java.util.Date();
 		java.sql.Date CurrentsqlDate=new java.sql.Date(date.getTime());
 		obj.calculateFine(CurrentsqlDate,"Student");
