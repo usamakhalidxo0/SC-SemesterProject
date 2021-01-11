@@ -220,9 +220,17 @@ public class adminsearchbookjframe extends JFrame {
 		Searchbookbutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(txtIdnameauthor.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly enter data in field first");
+				}
+				else {
+					
 				AdminSearchresultjframe frame = new AdminSearchresultjframe();
 				frame.setVisible(true);
 				dispose();
+				///show result in table
+				}
 			}
 		});
 		Searchbookbutton.setForeground(new Color(255, 255, 255));

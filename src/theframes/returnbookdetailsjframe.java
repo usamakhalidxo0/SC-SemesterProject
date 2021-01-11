@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,13 +22,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import com.toedter.calendar.JDayChooser;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class returnbookdetailsjframe extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField MemberIDtextField;
-	private JTextField MemberNametextField_1;
-	private JTextField MemberCategorytextField_2;
 	private JTextField BookIDtextField_3;
 	private JTextField BookNametextField_4;
 	private JTextField BookAuthortextField_5;
@@ -204,6 +206,7 @@ public class returnbookdetailsjframe extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				returnbookjframe frame = new returnbookjframe();
 				frame.setVisible(true);
+				dispose();
 			}
 		});
 		Cancelreturnbutton.setBackground(new Color(25, 25, 112));
@@ -216,13 +219,19 @@ public class returnbookdetailsjframe extends JFrame {
 		ReturnButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				
+				if(BookIDtextField_3.getText().trim().isEmpty()==true||BookNametextField_4.getText().trim().isEmpty()==true||BookAuthortextField_5.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly input all fields");
+				}else {
 				JOptionPane.showMessageDialog(contentPane, "Book status changes to available");
-			}
+				}}
 		});
 		ReturnButton.setBackground(new Color(25, 25, 112));
 		ReturnButton.setForeground(new Color(255, 255, 255));
 		ReturnButton.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		ReturnButton.setBounds(680, 392, 89, 40);
+		ReturnButton.setBounds(702, 394, 89, 40);
 		contentPane.add(ReturnButton);
 		
 		JLabel lblNewLabel_3 = new JLabel("Return Book");
@@ -230,81 +239,83 @@ public class returnbookdetailsjframe extends JFrame {
 		lblNewLabel_3.setBounds(278, 21, 146, 33);
 		contentPane.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_2 = new JLabel("Member Details");
-		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
-		lblNewLabel_2.setBounds(321, 86, 103, 22);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_4 = new JLabel("Member ID");
-		lblNewLabel_4.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblNewLabel_4.setBounds(351, 131, 112, 14);
-		contentPane.add(lblNewLabel_4);
-		
-		JLabel lblNewLabel_5 = new JLabel("Member Name");
-		lblNewLabel_5.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblNewLabel_5.setBounds(351, 166, 112, 14);
-		contentPane.add(lblNewLabel_5);
-		
-		JLabel lblNewLabel_6 = new JLabel("Member Category");
-		lblNewLabel_6.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblNewLabel_6.setBounds(351, 195, 112, 14);
-		contentPane.add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_2_1 = new JLabel("Book Details");
+		JLabel lblNewLabel_2_1 = new JLabel("Details");
 		lblNewLabel_2_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
-		lblNewLabel_2_1.setBounds(321, 224, 103, 22);
+		lblNewLabel_2_1.setBounds(321, 81, 103, 22);
 		contentPane.add(lblNewLabel_2_1);
 		
 		JLabel lblNewLabel_7 = new JLabel("Book ID");
 		lblNewLabel_7.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblNewLabel_7.setBounds(351, 265, 73, 14);
+		lblNewLabel_7.setBounds(351, 143, 73, 14);
 		contentPane.add(lblNewLabel_7);
 		
 		JLabel lblNewLabel_8 = new JLabel("Book Name");
 		lblNewLabel_8.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblNewLabel_8.setBounds(351, 298, 73, 14);
+		lblNewLabel_8.setBounds(351, 202, 73, 14);
 		contentPane.add(lblNewLabel_8);
 		
-		JLabel lblNewLabel_9 = new JLabel("Book Author");
+		JLabel lblNewLabel_9 = new JLabel("Issued To");
 		lblNewLabel_9.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblNewLabel_9.setBounds(351, 331, 73, 14);
+		lblNewLabel_9.setBounds(351, 253, 73, 14);
 		contentPane.add(lblNewLabel_9);
 		
-		MemberIDtextField = new JTextField();
-		MemberIDtextField.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		MemberIDtextField.setBounds(507, 129, 112, 20);
-		contentPane.add(MemberIDtextField);
-		MemberIDtextField.setColumns(10);
-		
-		MemberNametextField_1 = new JTextField();
-		MemberNametextField_1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		MemberNametextField_1.setBounds(507, 164, 112, 20);
-		contentPane.add(MemberNametextField_1);
-		MemberNametextField_1.setColumns(10);
-		
-		MemberCategorytextField_2 = new JTextField();
-		MemberCategorytextField_2.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		MemberCategorytextField_2.setBounds(507, 193, 112, 20);
-		contentPane.add(MemberCategorytextField_2);
-		MemberCategorytextField_2.setColumns(10);
-		
 		BookIDtextField_3 = new JTextField();
+		BookIDtextField_3.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				String book_ID=BookIDtextField_3.getText();
+				int book_IDlength=book_ID.length();
+				char c = e.getKeyChar();
+				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
+					if(book_IDlength<13)
+					{
+						BookIDtextField_3.setEditable(true);
+					}
+					else
+					{
+						BookIDtextField_3.setEditable(false);
+					}
+				}else
+				{
+					if(e.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE||e.getExtendedKeyCode()==KeyEvent.VK_DELETE)
+					{
+						BookIDtextField_3.setEditable(true);
+					}else
+					{
+						BookIDtextField_3.setEditable(false);
+					}
+				}
+				
+			}
+		});
 		BookIDtextField_3.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		BookIDtextField_3.setBounds(507, 259, 112, 20);
+		BookIDtextField_3.setBounds(512, 141, 112, 20);
 		contentPane.add(BookIDtextField_3);
 		BookIDtextField_3.setColumns(10);
 		
 		BookNametextField_4 = new JTextField();
 		BookNametextField_4.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		BookNametextField_4.setBounds(507, 296, 112, 20);
+		BookNametextField_4.setBounds(512, 200, 112, 20);
 		contentPane.add(BookNametextField_4);
 		BookNametextField_4.setColumns(10);
 		
 		BookAuthortextField_5 = new JTextField();
 		BookAuthortextField_5.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		BookAuthortextField_5.setBounds(507, 329, 112, 20);
+		BookAuthortextField_5.setBounds(512, 251, 112, 20);
 		contentPane.add(BookAuthortextField_5);
 		BookAuthortextField_5.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Issued Date");
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(350, 309, 74, 14);
+		contentPane.add(lblNewLabel_2);
+		
+	
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(512, 303, 112, 20);
+		contentPane.add(dateChooser);
+		
 	}
-
 }

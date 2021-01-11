@@ -146,6 +146,22 @@ public class LoginFrame extends JFrame {
 		txtIdbookauthor.setColumns(10);
 		
 		JButton SearchButton = new JButton("Search");
+		SearchButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(txtIdbookauthor.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly input data in field first");
+				}
+				else
+				{
+					//add data into table
+					searchbookjframe obj=new searchbookjframe();
+					obj.setVisible(true);
+					dispose();
+				}
+			}
+		});
 		SearchButton.setBorder(new LineBorder(new Color(65, 105, 225), 2));
 		SearchButton.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		SearchButton.setBackground(new Color(65, 105, 225));

@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class issuebookjframe extends JFrame {
 
@@ -210,6 +212,35 @@ public class issuebookjframe extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		txtEnterBookId = new JTextField();
+		txtEnterBookId.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				String book_ID=txtEnterBookId.getText();
+				int book_IDlength=book_ID.length();
+				char c = e.getKeyChar();
+				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
+					if(book_IDlength<13)
+					{
+						txtEnterBookId.setEditable(true);
+					}
+					else
+					{
+						txtEnterBookId.setEditable(false);
+					}
+				}else
+				{
+					if(e.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE||e.getExtendedKeyCode()==KeyEvent.VK_DELETE)
+					{
+						txtEnterBookId.setEditable(true);
+					}else
+					{
+						txtEnterBookId.setEditable(false);
+					}
+				}
+				
+			}
+		});
 		txtEnterBookId.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		txtEnterBookId.setText("Enter Book ID");
 		txtEnterBookId.setBounds(512, 106, 135, 20);
@@ -230,6 +261,36 @@ public class issuebookjframe extends JFrame {
 		MemberIDtextField_2.setColumns(10);
 		
 		BookIDtextField_3 = new JTextField();
+		BookIDtextField_3.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+
+				String book_ID=txtEnterBookId.getText();
+				int book_IDlength=book_ID.length();
+				char c = e.getKeyChar();
+				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
+					if(book_IDlength<13)
+					{
+						txtEnterBookId.setEditable(true);
+					}
+					else
+					{
+						txtEnterBookId.setEditable(false);
+					}
+				}else
+				{
+					if(e.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE||e.getExtendedKeyCode()==KeyEvent.VK_DELETE)
+					{
+						txtEnterBookId.setEditable(true);
+					}else
+					{
+						txtEnterBookId.setEditable(false);
+					}
+				}
+				
+			}
+		});
 		BookIDtextField_3.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		BookIDtextField_3.setBounds(512, 334, 135, 20);
 		contentPane.add(BookIDtextField_3);
@@ -254,6 +315,21 @@ public class issuebookjframe extends JFrame {
 		contentPane.add(lblNewLabel_6);
 		
 		JButton IssueButtonbtnNewButton_1 = new JButton("Issue");
+		IssueButtonbtnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(txtEnterBookId.getText().trim().isEmpty()==true||MemberIDtextField_2.getText().trim().isEmpty()==true||BookIDtextField_3.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly input data in all field first");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(contentPane, "Book successfully issued");
+					//add all book data in db
+				}
+				
+			}
+		});
 		IssueButtonbtnNewButton_1.setForeground(new Color(255, 255, 255));
 		IssueButtonbtnNewButton_1.setBackground(new Color(25, 25, 112));
 		IssueButtonbtnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 20));

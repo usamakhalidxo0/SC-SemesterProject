@@ -22,7 +22,7 @@ import javax.swing.DefaultComboBoxModel;
 public class deletebookjframe extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField idnameauhtortextField;
 
 	/**
 	 * Launch the application.
@@ -209,20 +209,27 @@ public class deletebookjframe extends JFrame {
 		deletebooksearchBYcomboBox.setBounds(542, 158, 148, 28);
 		contentPane.add(deletebooksearchBYcomboBox);
 		
-		textField = new JTextField();
-		textField.setText("ID/Name/Author");
-		textField.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		textField.setColumns(10);
-		textField.setBounds(542, 219, 148, 28);
-		contentPane.add(textField);
+		idnameauhtortextField = new JTextField();
+		idnameauhtortextField.setText("ID/Name/Author");
+		idnameauhtortextField.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		idnameauhtortextField.setColumns(10);
+		idnameauhtortextField.setBounds(542, 219, 148, 28);
+		contentPane.add(idnameauhtortextField);
 		
 		JButton ViewdetailsbtnNewButton_1 = new JButton("View Details");
 		ViewdetailsbtnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(idnameauhtortextField.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly enter data in filed first");
+				}
+				else
+				{
 				deletebookresultsjframe frame = new deletebookresultsjframe();
 				frame.setVisible(true);
 				dispose();
+				}
 			}
 		});
 		ViewdetailsbtnNewButton_1.setForeground(Color.WHITE);

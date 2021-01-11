@@ -103,7 +103,14 @@ public class searchbookjframe extends JFrame {
 		searchbtnNewButton.setBounds(130, 265, 89, 30);
 		searchbtnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if(textFieldidauthorname.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly input data in field first");
+				}
+				else
+				{//show results on the table
+					
+				}
 			}
 		});
 		searchbtnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 16));

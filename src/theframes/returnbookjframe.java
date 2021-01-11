@@ -16,11 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class returnbookjframe extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField emberIIDextField;
+	private JTextField BookIDextField;
 
 	/**
 	 * Launch the application.
@@ -189,21 +191,64 @@ public class returnbookjframe extends JFrame {
 		lblNewLabel_1.setBounds(0, 0, 259, 443);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Enter Member ID");
+		JLabel lblNewLabel_2 = new JLabel("Enter Book ID");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
 		lblNewLabel_2.setBounds(326, 179, 117, 26);
 		contentPane.add(lblNewLabel_2);
 		
-		emberIIDextField = new JTextField();
-		emberIIDextField.setBounds(472, 183, 146, 20);
-		contentPane.add(emberIIDextField);
-		emberIIDextField.setColumns(10);
+		BookIDextField = new JTextField();
+		BookIDextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				String book_ID=BookIDextField.getText();
+				int book_IDlength=book_ID.length();
+				char c = e.getKeyChar();
+				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
+					if(book_IDlength<13)
+					{
+						BookIDextField.setEditable(true);
+					}
+					else
+					{
+						BookIDextField.setEditable(false);
+					}
+				}else
+				{
+					if(e.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE||e.getExtendedKeyCode()==KeyEvent.VK_DELETE)
+					{
+						BookIDextField.setEditable(true);
+					}else
+					{
+						BookIDextField.setEditable(false);
+					}
+				}
+			}
+		});
+		BookIDextField.setBounds(472, 183, 146, 20);
+		contentPane.add(BookIDextField);
+		BookIDextField.setColumns(10);
 		
 		JButton ViewDetailsbtnNewButton_1 = new JButton("View Details");
+		ViewDetailsbtnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if(BookIDextField.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly input all fields");
+				}else {
+					returnbookdetailsjframe frame = new returnbookdetailsjframe();
+					frame.setVisible(true);
+					dispose();
+				}
+				
+			}
+		});
 		ViewDetailsbtnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
 		ViewDetailsbtnNewButton_1.setBackground(new Color(25, 25, 112));
 		ViewDetailsbtnNewButton_1.setForeground(new Color(255, 255, 255));
-		ViewDetailsbtnNewButton_1.setBounds(645, 269, 127, 33);
+		ViewDetailsbtnNewButton_1.setBounds(626, 269, 146, 33);
 		contentPane.add(ViewDetailsbtnNewButton_1);
 		
 		JLabel lblNewLabel_3 = new JLabel("Return Book");
