@@ -1,4 +1,4 @@
-package theframes;
+
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -280,7 +280,7 @@ public class AddBookJframe extends JFrame {
 		JButton ADDbookbutton = new JButton("ADD");
 		ADDbookbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Member obj=new Member();
 			}
 		});
 		ADDbookbutton.addMouseListener(new MouseAdapter() {

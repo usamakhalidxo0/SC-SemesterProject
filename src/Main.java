@@ -8,7 +8,7 @@ public class Main {
 		Book obj=new Book();
 		java.util.Date date=new java.util.Date();
 		java.sql.Date CurrentsqlDate=new java.sql.Date(date.getTime());
-		obj.calculateFine(CurrentsqlDate);
+		obj.calculateFine(CurrentsqlDate,"Student");
 		System.out.print("zahid code main running");
 		
 		//System.out.println(obj.returnBook("1231231421"));
