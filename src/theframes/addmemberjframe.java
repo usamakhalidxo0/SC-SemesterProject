@@ -1,6 +1,8 @@
 package theframes;
 
 import java.awt.BorderLayout;
+
+import java.util.regex.Pattern;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -18,7 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
-
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
 public class addmemberjframe extends JFrame {
 
 	private JPanel contentPane;
@@ -236,6 +240,27 @@ public class addmemberjframe extends JFrame {
 		contentPane.add(lblNewLabel_9);
 		
 		JButton Addmemberbutton = new JButton("ADD");
+		Addmemberbutton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(MemberNamefield.getText().trim().isEmpty()==true||MemberEnrollmentfield.getText().trim().isEmpty()==true||MemberProgramfield.getText().trim().isEmpty()||
+						MemberEmailfield.getText().trim().isEmpty()==true||MemberAdressfield.getText().trim().isEmpty()==true||MemberPhonefield.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(Addmemberbutton, "Kindly Enter All fields Data");
+				}else
+				{
+					//add data to
+					JOptionPane.showMessageDialog(Addmemberbutton, "Data succcessfully entered");
+				}
+			
+			}
+		});
+		Addmemberbutton.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+			}
+		});
 		Addmemberbutton.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		Addmemberbutton.setBackground(new Color(25, 25, 112));
 		Addmemberbutton.setForeground(new Color(255, 255, 255));
@@ -248,6 +273,33 @@ public class addmemberjframe extends JFrame {
 		MemberNamefield.setColumns(10);
 		
 		MemberEnrollmentfield = new JTextField();
+		MemberEnrollmentfield.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				String member_ID=MemberEnrollmentfield.getText();
+				int member_IDlength=member_ID.length();
+				char c = e.getKeyChar();
+				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
+					if(member_IDlength<13)
+					{
+						MemberEnrollmentfield.setEditable(true);
+					}
+					else
+					{
+						MemberEnrollmentfield.setEditable(false);
+					}
+				}else
+				{
+					if(e.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE||e.getExtendedKeyCode()==KeyEvent.VK_DELETE)
+					{
+						MemberEnrollmentfield.setEditable(true);
+					}else
+					{
+						MemberEnrollmentfield.setEditable(false);
+					}
+				}
+			}
+		});
 		MemberEnrollmentfield.setBounds(563, 173, 143, 20);
 		contentPane.add(MemberEnrollmentfield);
 		MemberEnrollmentfield.setColumns(10);
@@ -258,6 +310,13 @@ public class addmemberjframe extends JFrame {
 		MemberProgramfield.setColumns(10);
 		
 		MemberEmailfield = new JTextField();
+		MemberEmailfield.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				
+			}
+		});
 		MemberEmailfield.setBounds(563, 253, 143, 20);
 		contentPane.add(MemberEmailfield);
 		MemberEmailfield.setColumns(10);
@@ -276,6 +335,35 @@ public class addmemberjframe extends JFrame {
 		contentPane.add(catogorychoosecomboBox);
 		
 		MemberPhonefield = new JTextField();
+		MemberPhonefield.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				String member_Phone=MemberPhonefield.getText();
+				int member_Phonelength=member_Phone.length();
+				char c = e.getKeyChar();
+				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
+					if(member_Phonelength<11)
+					{
+						MemberPhonefield.setEditable(true);
+					}
+					else
+					{
+						MemberPhonefield.setEditable(false);
+					}
+				}else
+				{
+					if(e.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE||e.getExtendedKeyCode()==KeyEvent.VK_DELETE)
+					{
+						MemberPhonefield.setEditable(true);
+					}else
+					{
+						MemberPhonefield.setEditable(false);
+					}
+				}
+				
+			}
+		});
+		
 		MemberPhonefield.setBounds(563, 338, 143, 20);
 		contentPane.add(MemberPhonefield);
 		MemberPhonefield.setColumns(10);
