@@ -20,14 +20,14 @@ import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class issuebookjframe extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtEnterBookId;
-	private JTextField txtStatus;
 	private JTextField MemberIDtextField_2;
-	private JTextField BookIDtextField_3;
 
 	/**
 	 * Launch the application.
@@ -201,16 +201,6 @@ public class issuebookjframe extends JFrame {
 		lblNewLabel_2.setBounds(476, 41, 149, 33);
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Check Availability");
-		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_3.setBounds(372, 102, 142, 27);
-		contentPane.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_4 = new JLabel("Select");
-		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_4.setBounds(372, 235, 122, 27);
-		contentPane.add(lblNewLabel_4);
-		
 		txtEnterBookId = new JTextField();
 		txtEnterBookId.addKeyListener(new KeyAdapter() {
 			@Override
@@ -242,83 +232,35 @@ public class issuebookjframe extends JFrame {
 			}
 		});
 		txtEnterBookId.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtEnterBookId.setText("Enter Book ID");
 		txtEnterBookId.setBounds(512, 106, 135, 20);
 		contentPane.add(txtEnterBookId);
 		txtEnterBookId.setColumns(10);
 		
-		txtStatus = new JTextField();
-		txtStatus.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtStatus.setText("Status");
-		txtStatus.setBounds(512, 156, 140, 33);
-		contentPane.add(txtStatus);
-		txtStatus.setColumns(10);
-		
 		MemberIDtextField_2 = new JTextField();
 		MemberIDtextField_2.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		MemberIDtextField_2.setBounds(512, 298, 135, 20);
+		MemberIDtextField_2.setBounds(512, 157, 135, 20);
 		contentPane.add(MemberIDtextField_2);
 		MemberIDtextField_2.setColumns(10);
 		
-		BookIDtextField_3 = new JTextField();
-		BookIDtextField_3.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				
-
-				String book_ID=txtEnterBookId.getText();
-				int book_IDlength=book_ID.length();
-				char c = e.getKeyChar();
-				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
-					if(book_IDlength<13)
-					{
-						txtEnterBookId.setEditable(true);
-					}
-					else
-					{
-						txtEnterBookId.setEditable(false);
-					}
-				}else
-				{
-					if(e.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE||e.getExtendedKeyCode()==KeyEvent.VK_DELETE)
-					{
-						txtEnterBookId.setEditable(true);
-					}else
-					{
-						txtEnterBookId.setEditable(false);
-					}
-				}
-				
-			}
-		});
-		BookIDtextField_3.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		BookIDtextField_3.setBounds(512, 334, 135, 20);
-		contentPane.add(BookIDtextField_3);
-		BookIDtextField_3.setColumns(10);
-		
-		JComboBox MemberCategorycomboBox = new JComboBox();
-		MemberCategorycomboBox.setModel(new DefaultComboBoxModel(new String[] {"ID", "Name", "Author"}));
-		MemberCategorycomboBox.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		MemberCategorycomboBox.setForeground(new Color(255, 255, 255));
-		MemberCategorycomboBox.setBackground(new Color(25, 25, 112));
-		MemberCategorycomboBox.setBounds(512, 238, 135, 33);
-		contentPane.add(MemberCategorycomboBox);
-		
 		JLabel lblNewLabel_5 = new JLabel("Member ID");
 		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_5.setBounds(372, 297, 90, 20);
+		lblNewLabel_5.setBounds(389, 156, 90, 20);
 		contentPane.add(lblNewLabel_5);
 		
 		JLabel lblNewLabel_6 = new JLabel("Book ID");
 		lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_6.setBounds(372, 344, 90, 14);
+		lblNewLabel_6.setBounds(389, 108, 90, 14);
 		contentPane.add(lblNewLabel_6);
 		
 		JButton IssueButtonbtnNewButton_1 = new JButton("Issue");
+		IssueButtonbtnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		IssueButtonbtnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(txtEnterBookId.getText().trim().isEmpty()==true||MemberIDtextField_2.getText().trim().isEmpty()==true||BookIDtextField_3.getText().trim().isEmpty()==true)
+				if(txtEnterBookId.getText().trim().isEmpty()==true||MemberIDtextField_2.getText().trim().isEmpty()==true)
 				{
 					JOptionPane.showMessageDialog(contentPane, "Kindly input data in all field first");
 				}

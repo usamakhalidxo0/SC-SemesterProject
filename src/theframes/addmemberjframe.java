@@ -246,10 +246,14 @@ public class addmemberjframe extends JFrame {
 		Addmemberbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Member obj=new Member();
-				/*String value= ComboBox.getSelectedItem().toString();
-				obj.setCategary();*/
+				
+				
 				obj.setEnrollement(MemberEnrollmentfield.getText().toString());
 				obj.setName(MemberNamefield.getText().toString());
+				obj.setProgram(MemberProgramfield.getText());
+				obj.setEmail(MemberEmailfield.getText());
+				obj.setAdress(MemberAdressfield.getText());
+				obj.setPhoneNumber(MemberPhonefield.getText());
 				
 				
 				
@@ -357,7 +361,7 @@ public class addmemberjframe extends JFrame {
 				int member_Phonelength=member_Phone.length();
 				char c = e.getKeyChar();
 				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
-					if(member_Phonelength<11)
+					if(member_Phonelength==11)
 					{
 						MemberPhonefield.setEditable(true);
 					}

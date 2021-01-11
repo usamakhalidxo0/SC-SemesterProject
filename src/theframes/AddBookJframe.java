@@ -288,6 +288,13 @@ public class AddBookJframe extends JFrame {
 				obj.setStatus(true);
 				String message=obj.AddBook();
 				 JOptionPane.showMessageDialog(null,message);
+				 bookIDtextField.setText(null);
+				 booknametextField_1.setText(null);
+				 bookauthornametextField_2.setText(null);
+				 bookdescriptiontextField_3.setText(null);
+				 
+				 
+				 
 			}
 		});
 		ADDbookbutton.addMouseListener(new MouseAdapter() {

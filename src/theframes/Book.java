@@ -55,9 +55,11 @@ public class Book {
 	}
 	public String AddBook() 
 	{
-		String addMessage=null;
+	  String addMessage=null;
+	  if(!checkbookavailability(this.bookId))
+	  {
+		
 		try {
-				
 				String query = " insert into book (idBook, BookName, Author, description, status)"
 				        + " values (?, ?, ?, ?, ?)";
 				PreparedStatement preparedStmt =con.prepareStatement(query);
@@ -72,8 +74,13 @@ public class Book {
 		catch(Exception ex)
 		{
 			System.out.println(ex.getLocalizedMessage());
-			addMessage="Book is already added..";
+			addMessage=ex.getLocalizedMessage();
 		}
+	  }
+	  else
+	  {
+		  addMessage="Book is already added..";
+	  }
 		return addMessage;
 	}
 	public boolean deleteBook()
@@ -92,14 +99,24 @@ public class Book {
 		}
 		return true;
 	}
-	public  String issueBook(String bookId,String enrollement)
+	
+	
+   public  String issueBook(String bookId,String enrollement)
 	{
 		String issuedMessage=null;
+		int numberOfIssuedBook=0;
+		String categary=null;
 		try {
+			 
 			 if(chekcmembership(enrollement))
 			 {
 					if(checkbookavailability(bookId))
 					{
+						numberOfIssuedBook=getNumberOfbookIssued(enrollement);
+						categary=getcatagary(enrollement);
+						if(numberOfIssuedBook<4&& categary.equals("Student")|| numberOfIssuedBook<6&&categary.equals("Faculty"))
+						{
+						
 							if(!isIssued(bookId))
 							{
 					            java.util.Date date=new java.util.Date();
@@ -123,6 +140,11 @@ public class Book {
 							{
 								issuedMessage="Already issued to someone";
 							}
+						}
+						else
+						{
+							issuedMessage="no more book can issuedd.Maximum limit reached";
+						}
 		          }
 					else
 					{
@@ -141,6 +163,47 @@ public class Book {
 		
 		return issuedMessage;
 	}
+   
+   public String getcatagary(String memberId)
+   {
+	   String categary=null;
+	   try {
+	   String query = "SELECT Categary FROM member where Enrollement='"+ memberId+"'";
+		Statement st = this.con.createStatement();
+		ResultSet rs = st.executeQuery(query);
+		
+		while(rs.next())
+		{
+			categary=rs.getString("Categary");
+		}
+		System.out.println(categary);
+	   }
+	   catch(Exception ex)
+	   {
+		   return ex.getLocalizedMessage();
+	   }
+	   return categary;
+   }
+   public int getNumberOfbookIssued(String memberId)
+   {
+	   int numberOfBook=3;
+	   try {
+		   String query = "SELECT issuedBooksCount FROM member where Enrollement='"+ memberId+"'";
+			Statement st = this.con.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next())
+			{
+				numberOfBook=rs.getInt("issuedBooksCount");
+			}
+			System.out.println(numberOfBook);
+		   }
+		   catch(Exception ex)
+		   {
+			   return 0;
+		   }
+	   return numberOfBook;
+   }
 	public boolean returnBook(String bookId)
 	{
 		java.sql.Date sqlDate=null;
@@ -182,6 +245,8 @@ public class Book {
 		
 		return true;
 	}
+	
+	
 	public double calculateFine(java.sql.Date sqlDate,String categary)
 	{
 		double fine=0.0;
@@ -199,6 +264,8 @@ public class Book {
 		System.out.println(noOfDaysBetween);
 		return fine;
 	}
+	
+	
 	public boolean chekcmembership(String Enrollement)
 	{
 		boolean ismember=true;
@@ -221,6 +288,8 @@ public class Book {
 		
 		
 	}
+	
+	
 	public boolean checkbookavailability(String bookId)
 	{
 		boolean isAvailable=true;
@@ -240,6 +309,8 @@ public class Book {
 		}
 		return isAvailable;
 	}
+	
+	
 	public boolean isIssued(String bookId)
 	{
 		boolean isIssued=false;
