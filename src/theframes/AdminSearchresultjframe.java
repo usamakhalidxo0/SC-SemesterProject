@@ -29,7 +29,7 @@ import javax.swing.JScrollPane;
 public class AdminSearchresultjframe extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField idnameauhtortextField;
 	private JTable table;
 
 	/**
@@ -216,14 +216,30 @@ public class AdminSearchresultjframe extends JFrame {
 		searchbycomboBox.setBounds(537, 78, 148, 28);
 		contentPane.add(searchbycomboBox);
 		
-		textField = new JTextField();
-		textField.setText("ID/Name/Author");
-		textField.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		textField.setColumns(10);
-		textField.setBounds(537, 137, 148, 28);
-		contentPane.add(textField);
+		idnameauhtortextField = new JTextField();
+		idnameauhtortextField.setText("ID/Name/Author");
+		idnameauhtortextField.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		idnameauhtortextField.setColumns(10);
+		idnameauhtortextField.setBounds(537, 137, 148, 28);
+		contentPane.add(idnameauhtortextField);
 		
 		JButton SearchbtnNewButton_1 = new JButton("Search");
+		SearchbtnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(idnameauhtortextField.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly enter data in filed first");
+				}
+				else
+				{
+				deletebookresultsjframe frame = new deletebookresultsjframe();
+				frame.setVisible(true);
+				dispose();//show data in table
+				
+				}
+			}
+		});
 		SearchbtnNewButton_1.setForeground(Color.WHITE);
 		SearchbtnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		SearchbtnNewButton_1.setBackground(new Color(25, 25, 112));

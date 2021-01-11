@@ -21,7 +21,7 @@ import javax.swing.DefaultComboBoxModel;
 public class deletebookresultsjframe extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textFieldidnameauthor;
 	private JTextField BOOKIDtextField_1;
 	private JTextField BookNametextField_2;
 	private JTextField BookAuthortextField_3;
@@ -209,14 +209,27 @@ public class deletebookresultsjframe extends JFrame {
 		SearchbycomboBox.setBounds(500, 60, 148, 28);
 		contentPane.add(SearchbycomboBox);
 		
-		textField = new JTextField();
-		textField.setText("ID/Name/Author");
-		textField.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		textField.setColumns(10);
-		textField.setBounds(500, 116, 148, 28);
-		contentPane.add(textField);
+		textFieldidnameauthor = new JTextField();
+		textFieldidnameauthor.setText("ID/Name/Author");
+		textFieldidnameauthor.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		textFieldidnameauthor.setColumns(10);
+		textFieldidnameauthor.setBounds(500, 116, 148, 28);
+		contentPane.add(textFieldidnameauthor);
 		
 		JButton viewdetailsButton = new JButton("View Details");
+		viewdetailsButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(textFieldidnameauthor.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Enter data in field first");
+				}
+				else
+				{
+					//show books detils in textfields
+				}
+			}
+		});
 		viewdetailsButton.setForeground(Color.WHITE);
 		viewdetailsButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		viewdetailsButton.setBackground(new Color(25, 25, 112));
@@ -259,6 +272,20 @@ public class deletebookresultsjframe extends JFrame {
 		BookAuthortextField_3.setColumns(10);
 		
 		JButton DeleteButton = new JButton("Delete");
+		DeleteButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(BOOKIDtextField_1.getText().trim().isEmpty()==true||BookNametextField_2.getText().trim().isEmpty()==true||BookAuthortextField_3.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "fields are empty meaning book does not exist");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(contentPane, "Book successfully deleted");
+					//deletebook from db
+				}
+			}
+		});
 		DeleteButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		DeleteButton.setBackground(new Color(25, 25, 112));
 		DeleteButton.setForeground(new Color(255, 255, 255));
