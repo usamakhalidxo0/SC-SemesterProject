@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class Member {
+	//member fields
 	private String Enrollement;
 	private String Name;
 	private String program;
@@ -11,10 +12,12 @@ public class Member {
 	private String phoneNumber;
 	private String categary;
 	int issuedbookCount;
+	//constructur....
 	public Member()
 	{
 		
 	}
+	// overloaded constructar
 	public Member(String Enrollement,String Name, String program, String email,String Adress,String DOB,String PhoneNumber,String categary,int countbook)
 	{
 		this.Enrollement=Enrollement;
@@ -27,6 +30,7 @@ public class Member {
 		this.categary=categary;
 		this.issuedbookCount=countbook;
 	}
+	// getter and setter function
 	public String getEnrollement() {
 		return Enrollement;
 	}
@@ -75,8 +79,16 @@ public class Member {
 	public void setCategary(String categary) {
 		this.categary = categary;
 	}
+	public int getIssuedbookCount() {
+		return issuedbookCount;
+	}
+	public void setIssuedbookCount(int issuedbookCount) {
+		this.issuedbookCount = issuedbookCount;
+	}
+	// Add member method
 	public String addMember()
 	{
+		String messag=null;
 		try {
 			Connection con =DBMSConnection.establishedConnetion();
 			String query = " insert into member (Enrollement, Name, program, Email, Adress,DOB,PhoneNumber,Categary,issuedBooksCount)"
@@ -92,38 +104,37 @@ public class Member {
 		      preparedStmt.setString(8, this.categary);
 		      preparedStmt.setInt(9, this.issuedbookCount);
 		      preparedStmt.execute();
-		      System.out.println("successfuly stored");
+		      messag="Member is succesfully added";
+		      
 		    }
 			catch(Exception ex)
 			{
 				System.out.println(ex.getLocalizedMessage());
+				messag="member Already exist";
 			}
 			
 		
-		return null;
+		return messag;
 	}
-	public int getIssuedbookCount() {
-		return issuedbookCount;
-	}
-	public void setIssuedbookCount(int issuedbookCount) {
-		this.issuedbookCount = issuedbookCount;
-	}
+	
 	public String deleteMember()
 	{
+		String messag=null;
 		try {
 			Connection con =DBMSConnection.establishedConnetion();
 			String query = "delete from member where Enrollement = ?";
 		      PreparedStatement preparedStmt = con.prepareStatement(query);
 		      preparedStmt.setString(1,this.Enrollement);
 		      preparedStmt.execute();
-		      System.out.println("Delete successfully");
+		      messag="Member is deleted succesfully";
 			}
 			catch(Exception ex)
 			{
 				System.out.println(ex.getLocalizedMessage());
+				messag="Member not found";
 			}
 			
-		return null;
+		return messag;
 	}
 
 }

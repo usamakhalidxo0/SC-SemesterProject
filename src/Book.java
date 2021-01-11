@@ -179,13 +179,22 @@ public class Book {
 		
 		return true;
 	}
-	public double calculateFine(java.sql.Date sqlDate)
+	public double calculateFine(java.sql.Date sqlDate,String categary)
 	{
+		double fine=0.0;
 		java.util.Date date=new java.util.Date();
 		java.sql.Date CurrentsqlDate=new java.sql.Date(date.getTime());
 		long noOfDaysBetween = ChronoUnit.DAYS.between(sqlDate.toLocalDate(), CurrentsqlDate.toLocalDate());
+		if(noOfDaysBetween>7&& categary.equals("Student"))
+		{
+			fine=(noOfDaysBetween-7)*10;
+		}
+		else if(noOfDaysBetween>30&& categary.equals("Faculty"))
+		{
+			fine=(noOfDaysBetween-30)*10;
+		}
 		System.out.println(noOfDaysBetween);
-		return 0.0;
+		return fine;
 	}
 	public boolean chekcmembership(String Enrollement)
 	{
