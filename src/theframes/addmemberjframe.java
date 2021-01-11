@@ -18,12 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
-import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 public class addmemberjframe extends JFrame {
 
 	private JPanel contentPane;
@@ -232,7 +234,7 @@ public class addmemberjframe extends JFrame {
 		
 		JLabel lblNewLabel_8 = new JLabel("Enter Adress");
 		lblNewLabel_8.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblNewLabel_8.setBounds(409, 294, 103, 14);
+		lblNewLabel_8.setBounds(409, 298, 103, 14);
 		contentPane.add(lblNewLabel_8);
 		
 		JLabel lblNewLabel_9 = new JLabel("Enter Phone");
@@ -241,6 +243,18 @@ public class addmemberjframe extends JFrame {
 		contentPane.add(lblNewLabel_9);
 		
 		JButton Addmemberbutton = new JButton("ADD");
+		Addmemberbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Member obj=new Member();
+				/*String value= ComboBox.getSelectedItem().toString();
+				obj.setCategary();*/
+				obj.setEnrollement(MemberEnrollmentfield.getText().toString());
+				obj.setName(MemberNamefield.getText().toString());
+				
+				
+				
+			}
+		});
 		Addmemberbutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -265,7 +279,7 @@ public class addmemberjframe extends JFrame {
 		Addmemberbutton.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		Addmemberbutton.setBackground(new Color(25, 25, 112));
 		Addmemberbutton.setForeground(new Color(255, 255, 255));
-		Addmemberbutton.setBounds(704, 398, 89, 33);
+		Addmemberbutton.setBounds(675, 391, 89, 33);
 		contentPane.add(Addmemberbutton);
 		
 		MemberNamefield = new JTextField();
@@ -327,13 +341,13 @@ public class addmemberjframe extends JFrame {
 		contentPane.add(MemberAdressfield);
 		MemberAdressfield.setColumns(10);
 		
-		JComboBox catogorychoosecomboBox = new JComboBox();
-		catogorychoosecomboBox.setBackground(new Color(25, 25, 112));
-		catogorychoosecomboBox.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		catogorychoosecomboBox.setForeground(new Color(255, 255, 255));
-		catogorychoosecomboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Faculty"}));
-		catogorychoosecomboBox.setBounds(563, 81, 143, 22);
-		contentPane.add(catogorychoosecomboBox);
+		JComboBox ComboBox = new JComboBox();
+		ComboBox.setBackground(new Color(25, 25, 112));
+		ComboBox.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		ComboBox.setForeground(new Color(255, 255, 255));
+		ComboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Faculty"}));
+		ComboBox.setBounds(563, 81, 143, 22);
+		contentPane.add(ComboBox);
 		
 		MemberPhonefield = new JTextField();
 		MemberPhonefield.addKeyListener(new KeyAdapter() {
@@ -368,15 +382,7 @@ public class addmemberjframe extends JFrame {
 		MemberPhonefield.setBounds(563, 338, 143, 20);
 		contentPane.add(MemberPhonefield);
 		MemberPhonefield.setColumns(10);
-		
-		JLabel lblNewLabel_10 = new JLabel("Select DOB");
-		lblNewLabel_10.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblNewLabel_10.setBounds(409, 374, 87, 14);
-		contentPane.add(lblNewLabel_10);
-		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(563, 368, 152, 20);
-		contentPane.add(dateChooser);
 	
 	}
+
 }
