@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AddBookJframe extends JFrame {
 
@@ -219,6 +221,33 @@ public class AddBookJframe extends JFrame {
 		contentPane.add(lblNewLabel_6);
 		
 		bookIDtextField = new JTextField();
+		bookIDtextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				String book_ID=bookIDtextField.getText();
+				int book_IDlength=book_ID.length();
+				char c = e.getKeyChar();
+				if(e.getKeyChar()>='0' && e.getKeyChar()<='9') {
+					if(book_IDlength<13)
+					{
+						bookIDtextField.setEditable(true);
+					}
+					else
+					{
+						bookIDtextField.setEditable(false);
+					}
+				}else
+				{
+					if(e.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE||e.getExtendedKeyCode()==KeyEvent.VK_DELETE)
+					{
+						bookIDtextField.setEditable(true);
+					}else
+					{
+						bookIDtextField.setEditable(false);
+					}
+				}
+			}
+		});
 		bookIDtextField.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		bookIDtextField.setForeground(new Color(0, 0, 0));
 		bookIDtextField.setBounds(483, 163, 187, 20);
@@ -247,6 +276,20 @@ public class AddBookJframe extends JFrame {
 		bookdescriptiontextField_3.setColumns(10);
 		
 		JButton ADDbookbutton = new JButton("ADD");
+		ADDbookbutton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(bookIDtextField.getText().trim().isEmpty()==true||bookdescriptiontextField_3.getText().trim().isEmpty()==true||bookauthornametextField_2.getText().trim().isEmpty()==true||
+						booknametextField_1.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly enter all fields data");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(contentPane, "Book Added Successfully");
+				}
+			}
+		});
 		ADDbookbutton.setBackground(new Color(25, 25, 112));
 		ADDbookbutton.setForeground(new Color(255, 255, 255));
 		ADDbookbutton.setFont(new Font("Times New Roman", Font.BOLD, 14));
