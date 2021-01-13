@@ -38,6 +38,7 @@ public class searchbookjframe extends JFrame {
 				try {
 					searchbookjframe frame = new searchbookjframe();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

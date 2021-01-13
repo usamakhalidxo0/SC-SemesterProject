@@ -2,6 +2,7 @@ package theframes;
 import java.sql.*;
 import java.time.temporal.ChronoUnit;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -76,45 +77,138 @@ public class Book {
 		}
 		return addMessage;
 	}
-	public boolean deleteBook()
+	public ArrayList<String> viewDetails(String bookId )
 	{
-		try {
+		ArrayList<String> data=new ArrayList<String>();
 		
-		String query = "delete from book where idbook = ?";
-	      PreparedStatement preparedStmt = con.prepareStatement(query);
-	      preparedStmt.setString(1,this.bookId);
-	      preparedStmt.execute();
-	      System.out.println("Delete successfully");
+		if(checkbookavailability(bookId))
+		{
+		try {
+			String query = "SELECT idBook,BookName,description FROM book where idBook='"+ bookId+"'";
+			Statement st = this.con.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next())
+			{
+				data.add(rs.getString("idBook"));
+				data.add(rs.getString("BookName"));
+				data.add(rs.getString("description"));
+				
+			}
+		
+		   
 		}
 		catch(Exception ex)
 		{
 			System.out.println(ex.getLocalizedMessage());
+			data.add("Book with the specified ID no exist");
 		}
-		return true;
+		}
+		else
+		{
+			 data.add("Invalid Book ID, No such Book Exist");
+		}
+		return data;
+		
 	}
+	public ArrayList<String> viewDetailsOfReturnBook(String bookId )
+	{
+		ArrayList<String> data=new ArrayList<String>();
+		
+		if(checkbookavailability(bookId))
+		{
+			if(isIssued(bookId))
+			{
+		try {
+			String query = "SELECT bookId,Enrollement,issueDate FROM issuetable where bookId='"+bookId+"'";
+			Statement st = this.con.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next())
+			{
+				data.add(rs.getString("bookId"));
+				data.add(rs.getString("Enrollement"));
+				data.add(rs.getString("issueDate"));
+				
+			}
+		
+		   
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getLocalizedMessage());
+			data.add("Book with the specified ID no exist");
+		}
+		}
+		
+		else
+		{
+			data.add("Book is no Issued to someone");
+		}
+		}
+		else
+		{
+			 data.add("Invalid Book ID, No such Book Exist");
+		}
+		return data;
+		
+	}
+public String deleteBook(String bookId)
+	{
+	try
+	{
+		if( checkbookavailability(bookId))
+		{
+		String query = "delete from book where idbook = ?";
+	    PreparedStatement preparedStmt = con.prepareStatement(query);
+	    preparedStmt.setString(1,bookId);
+	    preparedStmt.execute();
+	    return "Book Deleted successfully";
+		}
+		else
+		{
+			return "Invalid book ID";
+		}
+  
+	}
+	catch(Exception ex)
+	{
+		return "Invalid book ID";
+	}
+}
 	public  String issueBook(String bookId,String enrollement)
 	{
 		String issuedMessage=null;
+		String Categary=null;
+		int numberOfIssueBooks=0;
 		try {
 			 if(chekcmembership(enrollement))
-			 {
-					if(checkbookavailability(bookId))
-					{
+			 {   
+				 Categary=getCategary(enrollement);
+				 numberOfIssueBooks=getnumberOfIssuedBook(enrollement);
+				 System.out.println(numberOfIssueBooks);
+				 if(numberOfIssueBooks<4&&Categary.equals("Student")||numberOfIssueBooks<6&&Categary.equals("Faculty"))
+				 {
+					
+						
 							if(!isIssued(bookId))
 							{
 					            java.util.Date date=new java.util.Date();
 								java.sql.Date sqlDate=new java.sql.Date(date.getTime());
 								
-								String query = "update book set status = ? where idBook = ?";
+								
+								numberOfIssueBooks++;
+								String query = "update book set status =1 where idBook ='"+bookId+"' ";
 							    PreparedStatement preparedStmt = con.prepareStatement(query);
-							    preparedStmt.setBoolean(1, true);
-							    preparedStmt.setString(2, this.bookId);
 							    preparedStmt.execute();
-							    query = " insert into issuetable(bookId, Enrollement, issueDate)"
+							     query = "update member set issuedBooksCount='"+numberOfIssueBooks+"' where Enrollement='"+enrollement+"'";
+							     preparedStmt = con.prepareStatement(query);
+								 preparedStmt.execute();
+							     query = " insert into issuetable(bookId, Enrollement, issueDate)"
 									        + " values (?, ?, ?)";
 								preparedStmt =this.con.prepareStatement(query);
 							    preparedStmt.setString(1, bookId);
-								preparedStmt.setString (2, "01-131182-038");
+								preparedStmt.setString (2, enrollement);
 								preparedStmt.setDate(3,sqlDate);
 								preparedStmt.execute();
 								issuedMessage="Issued";
@@ -123,11 +217,12 @@ public class Book {
 							{
 								issuedMessage="Already issued to someone";
 							}
-		          }
-					else
-					{
-						issuedMessage="book not Available";
-					}
+		          
+					
+				 }else
+				 {
+					 issuedMessage="no more book can be Issued maximum limit reached."; 
+				 }
 			 }
 			else
 			{
@@ -141,46 +236,79 @@ public class Book {
 		
 		return issuedMessage;
 	}
-	public boolean returnBook(String bookId)
+	//Return book...
+	public String returnBook(String bookId)
 	{
 		java.sql.Date sqlDate=null;
-		try {
+		String Enrollement=null;
+		String returnMessage=null;
+		int numberOfissuedBooks=0;
 		
-            
-			
-			try{
-				
-				String query = "SELECT issueDate FROM issuetable where bookId='"+ bookId+"'";
-				Statement st = this.con.createStatement();
-				ResultSet rs = st.executeQuery(query);
-				
-				while(rs.next())
-				{
-					sqlDate=rs.getDate("issueDate");
-				}
-				System.out.println(sqlDate);
-			}
-		   catch(Exception ex)
-		  {
-			System.out.println(ex.getLocalizedMessage());
-		  }
-			String query = "update book set status = ? where idBook = ?";
-		    PreparedStatement preparedStmt = con.prepareStatement(query);
-		    preparedStmt.setBoolean(1, false);
-		    preparedStmt.setString(2, bookId);
-		    preparedStmt.execute();
-		    query = "delete from issuetable where bookId = ?";
-		    preparedStmt = con.prepareStatement(query);
-		    preparedStmt.setString(1,bookId);
-		    preparedStmt.execute();
-		    System.out.println("Returned");
-		}
-		catch(Exception ex)
+		if(checkbookavailability(bookId))
 		{
-			System.out.println(ex.getLocalizedMessage());
+			if(isIssued(bookId))
+			{
+				try {
+				
+		            
+					
+					try{
+						
+						String query = "SELECT issueDate,Enrollement FROM issuetable where bookId='"+ bookId+"'";
+						Statement st = this.con.createStatement();
+						ResultSet rs = st.executeQuery(query);
+						
+						while(rs.next())
+						{
+							sqlDate=rs.getDate("issueDate");
+							Enrollement=rs.getString("Enrollement");
+						}
+						numberOfissuedBooks=getnumberOfIssuedBook(Enrollement);
+						
+						numberOfissuedBooks--;
+						query = "update member set issuedBooksCount='"+numberOfissuedBooks+"' where Enrollement='"+Enrollement+"'";
+						PreparedStatement  preparedStmt = con.prepareStatement(query);
+						 preparedStmt.execute();
+					}
+				   catch(Exception ex)
+				  {
+					System.out.println(ex.getLocalizedMessage());
+				  }
+					String query = "update book set status = ? where idBook = ?";
+				    PreparedStatement preparedStmt = con.prepareStatement(query);
+				    preparedStmt.setBoolean(1, false);
+				    preparedStmt.setString(2, bookId);
+				    preparedStmt.execute();
+				    query = "delete from issuetable where bookId = ?";
+				    preparedStmt = con.prepareStatement(query);
+				    preparedStmt.setString(1,bookId);
+				    preparedStmt.execute();
+				    double fine=calculateFine(sqlDate,getCategary(Enrollement));
+				    if(fine==0)
+				    {
+				    	returnMessage="Book Successfuly Returned";
+				    }
+				    else
+				    {
+				    	returnMessage="Book Sccuessfuly Returned and Fine charges due to late return are:: "+fine;
+				    }
+				}
+				catch(Exception ex)
+				{
+					System.out.println(ex.getLocalizedMessage());
+				}
+			}
+			else
+			{
+				returnMessage="Book is not issued to someone";
+			}
+	     }
+		else
+		{
+			returnMessage="Book not found in the library. Please Enter a valid IBN";
 		}
 		
-		return true;
+		return returnMessage;
 	}
 	public double calculateFine(java.sql.Date sqlDate,String categary)
 	{
@@ -262,6 +390,102 @@ public class Book {
 		  return isIssued;
 		
 	}
-	
+	public String getCategary(String memberId)
+	{
+		String categary=null;
+		try{
+			
+			String query = "SELECT Categary FROM member where Enrollement='"+ memberId+"'";
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next())
+			{
+				categary=rs.getString("Categary");
+			}
+			
+		}
+	   catch(Exception ex)
+	  {
+		System.out.println(ex.getLocalizedMessage());
+	  }
+		
+		return categary; 
+	}
+	public int getnumberOfIssuedBook(String memberId)
+	{
+		int numberofIssuedBook=1;
+		try{
+			
+			String query = "SELECT issuedBooksCount FROM member where Enrollement='"+ memberId+"'";
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next())
+			{
+				numberofIssuedBook=rs.getInt("issuedBooksCount");
+			}
+			
+		}
+	   catch(Exception ex)
+	  {
+		System.out.println(ex.getLocalizedMessage());
+	  }
+		
+		return numberofIssuedBook; 
+	}
+	public ResultSet searchBook(String parmeter, String searchBy)
+	{
+			ResultSet rs=null;
+			try{
+				if(searchBy=="ID")
+				{
+					String query = "select *from book where idBook='"+parmeter+"'";
+					Statement st = con.createStatement();
+				     rs = st.executeQuery(query);
+				     //testResultSet(rs);
+					
+				}
+				else if(searchBy=="Name")
+				{
+					String query = "select *from book where BookName='"+parmeter+"'";
+					Statement st = con.createStatement();
+				    rs = st.executeQuery(query);
+				    
+				    
+				}
+				else if(searchBy=="Author")
+				{
+						
+					String query = "select *from book where Author='"+parmeter+"'";
+					Statement st = con.createStatement();
+				    rs = st.executeQuery(query);
+				   // testResultSet(rs);
+				}
+			  }
+				catch(Exception ex)
+				{
+					System.out.println(ex.getLocalizedMessage());
+				}
+			//testResultSet(rs);
+		
+		return rs;
+		
+	}
+	public void testResultSet(ResultSet res)
+	{
+        try{
+            while(res.next()){
+                System.out.println("Book ID: "+ res.getString("idBook"));
+                System.out.println("Book Name: "+ res.getString("BookName"));
+                System.out.println("Author Name: "+ res.getString("Author"));
+                System.out.println("Description: "+ res.getString("description"));
+                System.out.println("Description: "+ res.getString("status"));
+            }        
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+	}
 	
 }

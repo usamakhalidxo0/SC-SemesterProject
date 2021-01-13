@@ -1,11 +1,13 @@
 package theframes;
 
 import java.awt.BorderLayout;
+import java.sql.*;
 import java.awt.EventQueue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.HeadlessException;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,12 +29,17 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollBar;
 
 public class AdminSearchresultjframe extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField idnameauhtortextField;
 	private JTable table;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -162,9 +171,9 @@ public class AdminSearchresultjframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					adminsearchbookjframe frame = new adminsearchbookjframe();
-					frame.setVisible(true);
-					dispose();
+					AdminSearchresultjframe obj= new AdminSearchresultjframe ();
+					obj.setVisible(true);
+						dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Error While going there"+ex.getMessage());
 			}
@@ -223,23 +232,89 @@ public class AdminSearchresultjframe extends JFrame {
 		idnameauhtortextField.setBounds(537, 137, 148, 28);
 		contentPane.add(idnameauhtortextField);
 		
+		
 		JButton SearchbtnNewButton_1 = new JButton("Search");
-		SearchbtnNewButton_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		SearchbtnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
 				if(idnameauhtortextField.getText().trim().isEmpty()==true)
 				{
 					JOptionPane.showMessageDialog(contentPane, "Kindly enter data in filed first");
 				}
 				else
 				{
-				deletebookresultsjframe frame = new deletebookresultsjframe();
-				frame.setVisible(true);
-				dispose();//show data in table
+					Book obj=new Book();
+					ResultSet rs;
+					rs=obj.searchBook(idnameauhtortextField.getText(), searchbycomboBox.getSelectedItem().toString());
+					try {
+						if(rs==null)
+						{
+							JOptionPane.showMessageDialog(contentPane,"No result Found");
+						}
+						else
+						{
+							try {
+								
+							  DefaultTableModel dtm = (DefaultTableModel)table_1.getModel();
+							  ResultSetMetaData meta = rs.getMetaData();
+							  int numberOfColumns = meta.getColumnCount();
+							  int numberOfRows=rs.getRow();
+							  
+							  
+							  System.out.println(numberOfColumns);
+							  System.out.println(numberOfRows);
+							  int x=0;
+							
+								        while (rs.next())
+								        {
+								        	  Object [] rowData = new Object[numberOfColumns];
+								        	
+							                for (int i = 0; i < rowData.length-1; ++i)
+							                {
+							                    rowData[i] = rs.getObject(i+1);
+							                   x++; 
+							                }
+							                System.out.println("Access");
+							                dtm.addRow(rowData);
+							                
+								        }
+								            
+					        	
+							  System.out.println(x);
+						              //  dtm.addRow(new Object[] {rs.getObject(1),rs.getObject(2),rs.getObject(3),rs.getObject(4) });
+						            
+						          
+						            
+						        
+						        
+							 }
+							catch(Exception ex)
+							{
+								JOptionPane.showMessageDialog(contentPane,ex.getLocalizedMessage());
+							}
+						}
+					} catch (HeadlessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			  }
+			}
+			
+		});
+		/*SearchbtnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			/*public void mouseClicked(MouseEvent e) {
+				if(idnameauhtortextField.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly enter data in filed first");
+				}
+				else
+				{
+				
 				
 				}
 			}
-		});
+		});*/
 		SearchbtnNewButton_1.setForeground(Color.WHITE);
 		SearchbtnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		SearchbtnNewButton_1.setBackground(new Color(25, 25, 112));
@@ -248,14 +323,26 @@ public class AdminSearchresultjframe extends JFrame {
 		
 		JLabel lblNewLabel_4 = new JLabel("Available Results");
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.ITALIC, 14));
-		lblNewLabel_4.setBounds(300, 219, 122, 22);
+		lblNewLabel_4.setBounds(269, 219, 122, 22);
 		contentPane.add(lblNewLabel_4);
 		
-		JScrollPane searchedbookresultsscrollPane = new JScrollPane();
-		searchedbookresultsscrollPane.setBounds(310, 260, 461, 168);
-		contentPane.add(searchedbookresultsscrollPane);
-		
 		table = new JTable();
-		searchedbookresultsscrollPane.setViewportView(table);
+		table.setBounds(335, 302, 122, -23);
+		contentPane.add(table);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(269, 260, 525, 172);
+		contentPane.add(scrollPane);
+		
+		table_1 = new JTable();
+		scrollPane.setViewportView(table_1);
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Book ID", "Book Name", "Author", "Description"
+			}
+		));
+		
 	}
 }

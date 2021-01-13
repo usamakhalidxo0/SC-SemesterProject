@@ -95,10 +95,12 @@ public class LoginFrame extends JFrame {
 		LoginButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if((txtUsername.getText().equals("username"))&&(pwdPassword.getText().equals("Mypass")))
+				Librarian obj=new Librarian();
+				if(obj.getLogin(txtUsername.getText(),pwdPassword.getText()))
 				{
-					adminmenus obj=new adminmenus();
-					obj.setVisible(true);
+					
+					adminmenus obj1=new adminmenus();
+					obj1.setVisible(true);
 					dispose();
 				}
 				else

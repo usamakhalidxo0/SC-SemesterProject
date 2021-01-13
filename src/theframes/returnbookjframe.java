@@ -18,6 +18,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class returnbookjframe extends JFrame {
 
@@ -155,8 +157,8 @@ public class returnbookjframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					adminsearchbookjframe frame = new adminsearchbookjframe();
-					frame.setVisible(true);
+					AdminSearchresultjframe obj= new AdminSearchresultjframe ();
+					obj.setVisible(true);
 					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Error While going there"+ex.getMessage());
@@ -230,6 +232,10 @@ public class returnbookjframe extends JFrame {
 		BookIDextField.setColumns(10);
 		
 		JButton ViewDetailsbtnNewButton_1 = new JButton("View Details");
+		ViewDetailsbtnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		ViewDetailsbtnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -154,9 +154,9 @@ public class adminmenus extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					adminsearchbookjframe frame = new adminsearchbookjframe();
-					frame.setVisible(true);
-					dispose();
+					AdminSearchresultjframe obj= new AdminSearchresultjframe ();
+					obj.setVisible(true);
+						dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Error While going there"+ex.getMessage());
 			}

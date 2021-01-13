@@ -93,18 +93,18 @@ public class Member {
 		String messag=null;
 		try {
 			Connection con =DBMSConnection.establishedConnetion();
-			String query = " insert into member (Enrollement, Name, program, Email, Adress,DOB,PhoneNumber,Categary,issuedBooksCount)"
-			        + " values (?, ?, ?, ?, ?,?,?,?,?)";
+			String query = " insert into member (Enrollement, Name, program, Email, Adress,PhoneNumber,Categary,issuedBooksCount)"
+			        + " values (?, ?, ?, ?, ?,?,?,?)";
 			PreparedStatement preparedStmt =con.prepareStatement(query);
 			preparedStmt.setString(1, this.Enrollement);
 		      preparedStmt.setString (2, this.Name);
 		      preparedStmt.setString(3, this.program);
 		      preparedStmt.setString(4, this.email);
 		      preparedStmt.setString(5, this.Adress);
-		      preparedStmt.setString(6, this.DOB);
-		      preparedStmt.setString(7, this.phoneNumber);
-		      preparedStmt.setString(8, this.categary);
-		      preparedStmt.setInt(9, this.issuedbookCount);
+		     
+		      preparedStmt.setString(6, this.phoneNumber);
+		      preparedStmt.setString(7, this.categary);
+		      preparedStmt.setInt(8, this.issuedbookCount);
 		      preparedStmt.execute();
 		      messag="Member is succesfully added";
 		      

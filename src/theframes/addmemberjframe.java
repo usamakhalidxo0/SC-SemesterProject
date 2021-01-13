@@ -35,6 +35,7 @@ public class addmemberjframe extends JFrame {
 	private JTextField MemberEmailfield;
 	private JTextField MemberAdressfield;
 	private JTextField MemberPhonefield;
+	private String categary;
 
 	/**
 	 * Launch the application.
@@ -168,9 +169,9 @@ public class addmemberjframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					adminsearchbookjframe frame = new adminsearchbookjframe();
-					frame.setVisible(true);
-					dispose();
+					AdminSearchresultjframe obj= new AdminSearchresultjframe ();
+					obj.setVisible(true);
+						dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Error While going there"+ex.getMessage());
 			}
@@ -241,15 +242,39 @@ public class addmemberjframe extends JFrame {
 		lblNewLabel_9.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		lblNewLabel_9.setBounds(409, 340, 103, 14);
 		contentPane.add(lblNewLabel_9);
-		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Faculty"}));
+		comboBox.setBounds(593, 82, 103, 22);
+		contentPane.add(comboBox);
 		JButton Addmemberbutton = new JButton("ADD");
 		Addmemberbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Member obj=new Member();
-				/*String value= ComboBox.getSelectedItem().toString();
-				obj.setCategary();*/
-				obj.setEnrollement(MemberEnrollmentfield.getText().toString());
-				obj.setName(MemberNamefield.getText().toString());
+				if(MemberNamefield.getText().trim().isEmpty()==true||MemberEnrollmentfield.getText().trim().isEmpty()==true||MemberProgramfield.getText().trim().isEmpty()||
+						MemberEmailfield.getText().trim().isEmpty()==true||MemberAdressfield.getText().trim().isEmpty()==true||MemberPhonefield.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(Addmemberbutton, "Kindly Enter All fields Data");
+				}else
+				{
+					Member obj=new Member();
+					
+					obj.setCategary(comboBox.getSelectedItem().toString());
+					
+					obj.setEmail(MemberEmailfield.getText());
+					obj.setEnrollement(MemberEnrollmentfield.getText().toString());
+					obj.setName(MemberNamefield.getText().toString());
+					obj.setProgram(MemberProgramfield.getText());
+					obj.setAdress(MemberAdressfield.getText());
+					obj.setPhoneNumber(MemberPhonefield.getText());
+					String message=obj.addMember();
+					JOptionPane.showMessageDialog(Addmemberbutton, message);
+					MemberEmailfield.setText("");
+					MemberEnrollmentfield.setText(null);
+					MemberNamefield.setText(null);
+					MemberProgramfield.setText(null);
+					MemberAdressfield.setText(null);
+					MemberPhonefield.setText(null);
+				}
+				
 				
 				
 				
@@ -258,15 +283,7 @@ public class addmemberjframe extends JFrame {
 		Addmemberbutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(MemberNamefield.getText().trim().isEmpty()==true||MemberEnrollmentfield.getText().trim().isEmpty()==true||MemberProgramfield.getText().trim().isEmpty()||
-						MemberEmailfield.getText().trim().isEmpty()==true||MemberAdressfield.getText().trim().isEmpty()==true||MemberPhonefield.getText().trim().isEmpty()==true)
-				{
-					JOptionPane.showMessageDialog(Addmemberbutton, "Kindly Enter All fields Data");
-				}else
-				{
-					//add data to
-					JOptionPane.showMessageDialog(Addmemberbutton, "Data succcessfully entered");
-				}
+				
 			
 			}
 		});
@@ -341,14 +358,6 @@ public class addmemberjframe extends JFrame {
 		contentPane.add(MemberAdressfield);
 		MemberAdressfield.setColumns(10);
 		
-		JComboBox ComboBox = new JComboBox();
-		ComboBox.setBackground(new Color(25, 25, 112));
-		ComboBox.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		ComboBox.setForeground(new Color(255, 255, 255));
-		ComboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Faculty"}));
-		ComboBox.setBounds(563, 81, 143, 22);
-		contentPane.add(ComboBox);
-		
 		MemberPhonefield = new JTextField();
 		MemberPhonefield.addKeyListener(new KeyAdapter() {
 			@Override
@@ -382,7 +391,8 @@ public class addmemberjframe extends JFrame {
 		MemberPhonefield.setBounds(563, 338, 143, 20);
 		contentPane.add(MemberPhonefield);
 		MemberPhonefield.setColumns(10);
+		
+		
 	
 	}
-
 }

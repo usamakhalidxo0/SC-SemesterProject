@@ -1,15 +1,26 @@
 package theframes;
 
+import java.util.ArrayList;
+
 public class Main {
 
 	public static void main(String[] args) {
-		
+		ArrayList<String> data=new ArrayList<String>();
 		Book obj=new Book();
+		System.out.println(obj.issueBook("4934930493949","01131182011"));
+		/*data=obj.viewDetailsOfReturnBook("9442345563685");
+		if(data.size()==1)
+		{
+			System.out.println(data.get(0));
+		}
+		else
+		{
+			for(int i=0; i<data.size(); i++)
+			{
+				System.out.println(data.get(i));
+			}
+		}*/
 		
-		java.util.Date date=new java.util.Date();
-		java.sql.Date CurrentsqlDate=new java.sql.Date(date.getTime());
-		obj.calculateFine(CurrentsqlDate,"Student");
-		System.out.print("zahid code main running");
 		
 		//System.out.println(obj.returnBook("1231231421"));
 	}

@@ -161,9 +161,9 @@ public class AddBookJframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					adminsearchbookjframe frame = new adminsearchbookjframe();
-					frame.setVisible(true);
-					dispose();
+					AdminSearchresultjframe obj= new AdminSearchresultjframe ();
+					obj.setVisible(true);
+						dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Error While going there"+ex.getMessage());
 			}
@@ -280,14 +280,29 @@ public class AddBookJframe extends JFrame {
 		JButton ADDbookbutton = new JButton("ADD");
 		ADDbookbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Book obj=new Book();
-				obj.setBookId(bookIDtextField.getText().toString());
-				obj.setBookName(booknametextField_1.getText().toString());
-				obj.setAuthorName(bookauthornametextField_2.getText().toString());
-				obj.setDescription(bookdescriptiontextField_3.getText().toString());
-				obj.setStatus(true);
-				String message=obj.AddBook();
-				 JOptionPane.showMessageDialog(null,message);
+				if(bookIDtextField.getText().trim().isEmpty()==true||bookdescriptiontextField_3.getText().trim().isEmpty()==true||bookauthornametextField_2.getText().trim().isEmpty()==true||
+						booknametextField_1.getText().trim().isEmpty()==true)
+				{
+					JOptionPane.showMessageDialog(contentPane, "Kindly enter all fields data");
+				}
+				else
+				{
+					Book obj=new Book();
+					obj.setBookId(bookIDtextField.getText().toString());
+					obj.setBookName(booknametextField_1.getText().toString());
+					obj.setAuthorName(bookauthornametextField_2.getText().toString());
+					obj.setDescription(bookdescriptiontextField_3.getText().toString());
+					obj.setStatus(false);
+					String message=obj.AddBook();
+					 JOptionPane.showMessageDialog(null,message);
+					 bookIDtextField.setText(null);
+					 booknametextField_1.setText(null);
+					 bookauthornametextField_2.setText(null);
+					 bookdescriptiontextField_3.setText(null);
+					 bookIDtextField.setEditable(true);
+					
+				}
+				
 			}
 		});
 		ADDbookbutton.addMouseListener(new MouseAdapter() {

@@ -18,6 +18,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class adminsearchbookjframe extends JFrame {
 
@@ -155,9 +157,9 @@ public class adminsearchbookjframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					adminsearchbookjframe frame = new adminsearchbookjframe();
-					frame.setVisible(true);
-					dispose();
+					AdminSearchresultjframe obj= new AdminSearchresultjframe ();
+					obj.setVisible(true);
+						dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Error While going there"+ex.getMessage());
 			}
@@ -217,6 +219,10 @@ public class adminsearchbookjframe extends JFrame {
 		txtIdnameauthor.setColumns(10);
 		
 		JButton Searchbookbutton = new JButton("Search");
+		Searchbookbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		Searchbookbutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -18,6 +18,8 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 public class deletebookresultsjframe extends JFrame {
 
 	private JPanel contentPane;
@@ -156,9 +158,9 @@ public class deletebookresultsjframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					adminsearchbookjframe frame = new adminsearchbookjframe();
-					frame.setVisible(true);
-					dispose();
+					AdminSearchresultjframe obj= new AdminSearchresultjframe ();
+					obj.setVisible(true);
+						dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Error While going there"+ex.getMessage());
 			}
@@ -217,6 +219,10 @@ public class deletebookresultsjframe extends JFrame {
 		contentPane.add(textFieldidnameauthor);
 		
 		JButton viewdetailsButton = new JButton("View Details");
+		viewdetailsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		viewdetailsButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -272,6 +278,10 @@ public class deletebookresultsjframe extends JFrame {
 		BookAuthortextField_3.setColumns(10);
 		
 		JButton DeleteButton = new JButton("Delete");
+		DeleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		DeleteButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

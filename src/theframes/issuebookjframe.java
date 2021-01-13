@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,13 +21,13 @@ import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class issuebookjframe extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtEnterBookId;
-	private JTextField txtStatus;
-	private JTextField MemberIDtextField_2;
 	private JTextField BookIDtextField_3;
 
 	/**
@@ -160,9 +161,9 @@ public class issuebookjframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					adminsearchbookjframe frame = new adminsearchbookjframe();
-					frame.setVisible(true);
-					dispose();
+					AdminSearchresultjframe obj= new AdminSearchresultjframe ();
+					obj.setVisible(true);
+						dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Error While going there"+ex.getMessage());
 			}
@@ -201,16 +202,6 @@ public class issuebookjframe extends JFrame {
 		lblNewLabel_2.setBounds(476, 41, 149, 33);
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Check Availability");
-		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_3.setBounds(372, 102, 142, 27);
-		contentPane.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_4 = new JLabel("Select");
-		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_4.setBounds(372, 235, 122, 27);
-		contentPane.add(lblNewLabel_4);
-		
 		txtEnterBookId = new JTextField();
 		txtEnterBookId.addKeyListener(new KeyAdapter() {
 			@Override
@@ -243,22 +234,9 @@ public class issuebookjframe extends JFrame {
 		});
 		txtEnterBookId.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		txtEnterBookId.setText("Enter Book ID");
-		txtEnterBookId.setBounds(512, 106, 135, 20);
+		txtEnterBookId.setBounds(512, 93, 165, 33);
 		contentPane.add(txtEnterBookId);
 		txtEnterBookId.setColumns(10);
-		
-		txtStatus = new JTextField();
-		txtStatus.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		txtStatus.setText("Status");
-		txtStatus.setBounds(512, 156, 140, 33);
-		contentPane.add(txtStatus);
-		txtStatus.setColumns(10);
-		
-		MemberIDtextField_2 = new JTextField();
-		MemberIDtextField_2.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		MemberIDtextField_2.setBounds(512, 298, 135, 20);
-		contentPane.add(MemberIDtextField_2);
-		MemberIDtextField_2.setColumns(10);
 		
 		BookIDtextField_3 = new JTextField();
 		BookIDtextField_3.addKeyListener(new KeyAdapter() {
@@ -292,49 +270,121 @@ public class issuebookjframe extends JFrame {
 			}
 		});
 		BookIDtextField_3.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		BookIDtextField_3.setBounds(512, 334, 135, 20);
+		BookIDtextField_3.setBounds(512, 357, 165, 28);
 		contentPane.add(BookIDtextField_3);
 		BookIDtextField_3.setColumns(10);
 		
-		JComboBox MemberCategorycomboBox = new JComboBox();
-		MemberCategorycomboBox.setModel(new DefaultComboBoxModel(new String[] {"ID", "Name", "Author"}));
-		MemberCategorycomboBox.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		MemberCategorycomboBox.setForeground(new Color(255, 255, 255));
-		MemberCategorycomboBox.setBackground(new Color(25, 25, 112));
-		MemberCategorycomboBox.setBounds(512, 238, 135, 33);
-		contentPane.add(MemberCategorycomboBox);
-		
-		JLabel lblNewLabel_5 = new JLabel("Member ID");
-		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_5.setBounds(372, 297, 90, 20);
-		contentPane.add(lblNewLabel_5);
-		
-		JLabel lblNewLabel_6 = new JLabel("Book ID");
+		JLabel lblNewLabel_6 = new JLabel("Member ID");
 		lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_6.setBounds(372, 344, 90, 14);
+		lblNewLabel_6.setBounds(393, 355, 90, 28);
 		contentPane.add(lblNewLabel_6);
 		
 		JButton IssueButtonbtnNewButton_1 = new JButton("Issue");
+		IssueButtonbtnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+						if(txtEnterBookId.getText().trim().isEmpty()==true||BookIDtextField_3.getText().trim().isEmpty()==true)
+						{
+							JOptionPane.showMessageDialog(contentPane, "Kindly input data in all field first");
+						}
+						else
+						{
+							Book obj=new Book();
+							
+							JOptionPane.showMessageDialog(contentPane,obj.issueBook(txtEnterBookId.getText(), BookIDtextField_3.getText()));
+							
+						}
+			}
+		});
 		IssueButtonbtnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(txtEnterBookId.getText().trim().isEmpty()==true||MemberIDtextField_2.getText().trim().isEmpty()==true||BookIDtextField_3.getText().trim().isEmpty()==true)
-				{
-					JOptionPane.showMessageDialog(contentPane, "Kindly input data in all field first");
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(contentPane, "Book successfully issued");
-					//add all book data in db
-				}
+				
 				
 			}
 		});
 		IssueButtonbtnNewButton_1.setForeground(new Color(255, 255, 255));
 		IssueButtonbtnNewButton_1.setBackground(new Color(25, 25, 112));
 		IssueButtonbtnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		IssueButtonbtnNewButton_1.setBounds(679, 381, 89, 33);
+		IssueButtonbtnNewButton_1.setBounds(619, 410, 124, 33);
 		contentPane.add(IssueButtonbtnNewButton_1);
+		JLabel BookIdLabel = new JLabel("");
+		BookIdLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		BookIdLabel.setBounds(369, 201, 239, 20);
+		contentPane.add(BookIdLabel);
+		
+		JLabel BookNameLabel = new JLabel("");
+		BookNameLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		BookNameLabel.setBounds(369, 235, 239, 20);
+		contentPane.add(BookNameLabel);
+		
+		JLabel AuthorNameLabel = new JLabel("");
+		AuthorNameLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		AuthorNameLabel.setBounds(369, 285, 239, 20);
+		contentPane.add(AuthorNameLabel);
+		
+		JLabel lblNewLabel_6_1_3_1 = new JLabel("Description:");
+		lblNewLabel_6_1_3_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblNewLabel_6_1_3_1.setBounds(269, 321, 90, 14);
+		contentPane.add(lblNewLabel_6_1_3_1);
+		
+		JLabel DescriptionLabel = new JLabel("");
+		DescriptionLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		DescriptionLabel.setBounds(369, 321, 239, 20);
+		contentPane.add(DescriptionLabel);
+		
+		JLabel lblNewLabel_6_1 = new JLabel("Book ID");
+		lblNewLabel_6_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblNewLabel_6_1.setBounds(393, 101, 90, 14);
+		contentPane.add(lblNewLabel_6_1);
+		
+		JButton IssueButtonbtnNewButton_1_1 = new JButton("View Details");
+		IssueButtonbtnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Book obj=new Book();
+				ArrayList<String> data=obj.viewDetails(txtEnterBookId.getText());
+				if(data.size()==1)
+				{
+					JOptionPane.showMessageDialog(contentPane, data.get(0));
+				}
+				else
+				{
+					BookIdLabel.setText(data.get(0));
+					BookNameLabel.setText(data.get(1));
+					AuthorNameLabel.setText(data.get(2));
+					
+				}
+				
+				
+			}
+		});
+		IssueButtonbtnNewButton_1_1.setForeground(Color.WHITE);
+		IssueButtonbtnNewButton_1_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		IssueButtonbtnNewButton_1_1.setBackground(new Color(25, 25, 112));
+		IssueButtonbtnNewButton_1_1.setBounds(567, 137, 149, 33);
+		contentPane.add(IssueButtonbtnNewButton_1_1);
+		
+		JLabel lblNewLabel_6_2 = new JLabel("Details:");
+		lblNewLabel_6_2.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblNewLabel_6_2.setBounds(269, 158, 90, 28);
+		contentPane.add(lblNewLabel_6_2);
+		
+		JLabel lblNewLabel_6_1_1 = new JLabel("Book ID:");
+		lblNewLabel_6_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblNewLabel_6_1_1.setBounds(269, 197, 90, 20);
+		contentPane.add(lblNewLabel_6_1_1);
+		
+		JLabel lblNewLabel_6_1_2 = new JLabel("Book Name:");
+		lblNewLabel_6_1_2.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblNewLabel_6_1_2.setBounds(269, 241, 90, 14);
+		contentPane.add(lblNewLabel_6_1_2);
+		
+		JLabel lblNewLabel_6_1_3 = new JLabel("Author Name:");
+		lblNewLabel_6_1_3.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblNewLabel_6_1_3.setBounds(269, 285, 90, 14);
+		contentPane.add(lblNewLabel_6_1_3);
+		
+		
 		
 	}
 }
