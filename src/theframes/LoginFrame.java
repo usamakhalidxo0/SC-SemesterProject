@@ -29,7 +29,6 @@ public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUsername;
-	private JTextField txtIdbookauthor;
 	private JPasswordField pwdPassword;
 	/**
 	 * Launch the application.
@@ -122,53 +121,30 @@ public class LoginFrame extends JFrame {
 		lblNewLabel_4.setBounds(249, 219, 416, 14);
 		contentPane.add(lblNewLabel_4);
 		
-		JComboBox searchbycomboBox = new JComboBox();
-		searchbycomboBox.setBorder(new LineBorder(new Color(65, 105, 225), 2));
-		searchbycomboBox.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		searchbycomboBox.setBackground(new Color(65, 105, 225));
-		searchbycomboBox.setForeground(Color.WHITE);
-		searchbycomboBox.setModel(new DefaultComboBoxModel(new String[] {"ID", "Name", "Author"}));
-		searchbycomboBox.setToolTipText("ID\r\nName\r\nAuthor");
-		searchbycomboBox.setBounds(405, 263, 115, 22);
-		contentPane.add(searchbycomboBox);
-		
-		JLabel lblNewLabel_5 = new JLabel("Search By");
-		lblNewLabel_5.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		JLabel lblNewLabel_5 = new JLabel("Search");
+		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		lblNewLabel_5.setForeground(Color.BLUE);
-		lblNewLabel_5.setBounds(334, 258, 61, 32);
+		lblNewLabel_5.setBounds(405, 231, 61, 32);
 		contentPane.add(lblNewLabel_5);
 		
-		txtIdbookauthor = new JTextField();
-		txtIdbookauthor.setBorder(new LineBorder(new Color(171, 173, 179), 2, true));
-		txtIdbookauthor.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		txtIdbookauthor.setText("ID/BOOK/AUTHOR");
-		txtIdbookauthor.setForeground(Color.BLUE);
-		txtIdbookauthor.setBounds(405, 306, 130, 20);
-		contentPane.add(txtIdbookauthor);
-		txtIdbookauthor.setColumns(10);
-		
 		JButton SearchButton = new JButton("Search");
+		SearchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				searchbookjframe obj=new searchbookjframe();
+				obj.show();
+			}
+		});
 		SearchButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(txtIdbookauthor.getText().trim().isEmpty()==true)
-				{
-					JOptionPane.showMessageDialog(contentPane, "Kindly input data in field first");
-				}
-				else
-				{
-					//add data into table
-					searchbookjframe obj=new searchbookjframe();
-					obj.setVisible(true);
-					dispose();
-				}
+				
 			}
 		});
 		SearchButton.setBorder(new LineBorder(new Color(65, 105, 225), 2));
 		SearchButton.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		SearchButton.setBackground(new Color(65, 105, 225));
 		SearchButton.setForeground(Color.WHITE);
-		SearchButton.setBounds(417, 337, 103, 23);
+		SearchButton.setBounds(391, 274, 103, 23);
 		contentPane.add(SearchButton);
 		
 		JLabel lblNewLabel_6 = new JLabel("New label");

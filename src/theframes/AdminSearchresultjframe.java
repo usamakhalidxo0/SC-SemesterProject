@@ -236,6 +236,8 @@ public class AdminSearchresultjframe extends JFrame {
 		JButton SearchbtnNewButton_1 = new JButton("Search");
 		SearchbtnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				  DefaultTableModel dtm = (DefaultTableModel)table_1.getModel();
+				  dtm.setRowCount(ABORT);
 				
 				if(idnameauhtortextField.getText().trim().isEmpty()==true)
 				{
@@ -255,7 +257,8 @@ public class AdminSearchresultjframe extends JFrame {
 						{
 							try {
 								
-							  DefaultTableModel dtm = (DefaultTableModel)table_1.getModel();
+								
+							
 							  ResultSetMetaData meta = rs.getMetaData();
 							  int numberOfColumns = meta.getColumnCount();
 							  int numberOfRows=rs.getRow();
@@ -331,7 +334,7 @@ public class AdminSearchresultjframe extends JFrame {
 		contentPane.add(table);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(269, 260, 525, 172);
+		scrollPane.setBounds(269, 240, 513, 262);
 		contentPane.add(scrollPane);
 		
 		table_1 = new JTable();
