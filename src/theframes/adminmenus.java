@@ -21,8 +21,6 @@ import javax.swing.JOptionPane;
 public class adminmenus extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
-	private JTable table_1;
 	/**
 	 * Launch the application.
 	 */
@@ -173,7 +171,7 @@ public class adminmenus extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					returnbookjframe frame = new returnbookjframe();
+					returnbookdetailsjframe frame = new returnbookdetailsjframe();
 					frame.setVisible(true);
 					dispose();
 				} catch (Exception ex) {
@@ -195,32 +193,6 @@ public class adminmenus extends JFrame {
 		lblNewLabel_2.setIcon(new ImageIcon(imgs));
 		lblNewLabel_2.setBounds(254, 0, 560, 150);
 		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("Search Hisory");
-		lblNewLabel_3.setForeground(new Color(25, 25, 112));
-		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		lblNewLabel_3.setBounds(289, 165, 155, 21);
-		contentPane.add(lblNewLabel_3);
-		
-		JScrollPane searchhistoryscrollPane = new JScrollPane();
-		searchhistoryscrollPane.setBounds(299, 190, 491, 100);
-		contentPane.add(searchhistoryscrollPane);
-		
-		table = new JTable();
-		searchhistoryscrollPane.setViewportView(table);
-		
-		JLabel lblNewLabel_4 = new JLabel("Recently Added Books");
-		lblNewLabel_4.setForeground(new Color(25, 25, 112));
-		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		lblNewLabel_4.setBounds(289, 298, 177, 21);
-		contentPane.add(lblNewLabel_4);
-		
-		JScrollPane recentlyaddedbooksscrollPane_1 = new JScrollPane();
-		recentlyaddedbooksscrollPane_1.setBounds(299, 321, 494, 111);
-		contentPane.add(recentlyaddedbooksscrollPane_1);
-		
-		table_1 = new JTable();
-		recentlyaddedbooksscrollPane_1.setViewportView(table_1);
 		
 	
 		

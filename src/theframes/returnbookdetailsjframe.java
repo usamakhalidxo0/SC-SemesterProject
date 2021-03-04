@@ -184,7 +184,7 @@ public class returnbookdetailsjframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					returnbookjframe frame = new returnbookjframe();
+					returnbookdetailsjframe frame = new returnbookdetailsjframe();
 					frame.setVisible(true);
 					dispose();
 				} catch (Exception ex) {
@@ -200,21 +200,6 @@ public class returnbookdetailsjframe extends JFrame {
 		lblNewLabel_1.setBackground(new Color(51, 51, 153));
 		lblNewLabel_1.setBounds(0, 0, 259, 443);
 		contentPane.add(lblNewLabel_1);
-		
-		JButton Cancelreturnbutton = new JButton("Cancel");
-		Cancelreturnbutton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				returnbookjframe frame = new returnbookjframe();
-				frame.setVisible(true);
-				dispose();
-			}
-		});
-		Cancelreturnbutton.setBackground(new Color(25, 25, 112));
-		Cancelreturnbutton.setForeground(new Color(255, 255, 255));
-		Cancelreturnbutton.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		Cancelreturnbutton.setBounds(278, 392, 89, 40);
-		contentPane.add(Cancelreturnbutton);
 		JLabel BookName = new JLabel("");
 		BookName.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		BookName.setBounds(512, 202, 73, 14);
@@ -257,7 +242,9 @@ public class returnbookdetailsjframe extends JFrame {
 				BookNameLabel.setText(null);
 				IssuedToLabel.setText(null);
 				IssuedDateLabel.setText(null);
+				
 				}
+				BookIDtextField_3.setEditable(true);
 				
 			}
 		});
@@ -355,7 +342,10 @@ public class returnbookdetailsjframe extends JFrame {
 					IssuedToLabel.setText(data.get(1));
 					IssuedDateLabel.setText(data.get(2));
 					
+					
+					
 				}
+				BookIDtextField_3.setEditable(true);
 			}
 		});
 		ViewDetail.setForeground(Color.WHITE);

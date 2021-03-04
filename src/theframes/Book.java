@@ -157,18 +157,28 @@ public String deleteBook(String bookId)
 	{
 	try
 	{
+		
 		if( checkbookavailability(bookId))
 		{
+			if(!isIssued(bookId))
+			{
 		String query = "delete from book where idbook = ?";
 	    PreparedStatement preparedStmt = con.prepareStatement(query);
 	    preparedStmt.setString(1,bookId);
 	    preparedStmt.execute();
 	    return "Book Deleted successfully";
 		}
+			else
+			{
+				return "Book can not be deleted becuase it is issued to someone";
+			}
+		}
 		else
 		{
 			return "Invalid book ID";
 		}
+		
+		
   
 	}
 	catch(Exception ex)
@@ -414,7 +424,7 @@ public String deleteBook(String bookId)
 	}
 	public int getnumberOfIssuedBook(String memberId)
 	{
-		int numberofIssuedBook=1;
+		int numberofIssuedBook=0;
 		try{
 			
 			String query = "SELECT issuedBooksCount FROM member where Enrollement='"+ memberId+"'";
@@ -472,6 +482,7 @@ public String deleteBook(String bookId)
 		return rs;
 		
 	}
+	/*
 	public void testResultSet(ResultSet res)
 	{
         try{
@@ -486,6 +497,6 @@ public String deleteBook(String bookId)
         catch(Exception e){
             e.printStackTrace();
         }
-	}
+	}*/
 	
 }
