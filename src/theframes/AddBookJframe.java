@@ -180,7 +180,7 @@ public class AddBookJframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					returnbookjframe frame = new returnbookjframe();
+					returnbookdetailsjframe frame = new returnbookdetailsjframe();
 					frame.setVisible(true);
 					dispose();
 				} catch (Exception ex) {

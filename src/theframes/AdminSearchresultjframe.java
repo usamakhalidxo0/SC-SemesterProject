@@ -190,7 +190,7 @@ public class AdminSearchresultjframe extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					returnbookjframe frame = new returnbookjframe();
+					returnbookdetailsjframe frame = new returnbookdetailsjframe();
 					frame.setVisible(true);
 					dispose();
 				} catch (Exception ex) {
@@ -237,7 +237,7 @@ public class AdminSearchresultjframe extends JFrame {
 		SearchbtnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				  DefaultTableModel dtm = (DefaultTableModel)table_1.getModel();
-				  dtm.setRowCount(ABORT);
+				  dtm.setRowCount(0);
 				
 				if(idnameauhtortextField.getText().trim().isEmpty()==true)
 				{
@@ -264,8 +264,7 @@ public class AdminSearchresultjframe extends JFrame {
 							  int numberOfRows=rs.getRow();
 							  
 							  
-							  System.out.println(numberOfColumns);
-							  System.out.println(numberOfRows);
+							  
 							  int x=0;
 							
 								        while (rs.next())
@@ -275,7 +274,7 @@ public class AdminSearchresultjframe extends JFrame {
 							                for (int i = 0; i < rowData.length-1; ++i)
 							                {
 							                    rowData[i] = rs.getObject(i+1);
-							                   x++; 
+							                 
 							                }
 							                System.out.println("Access");
 							                dtm.addRow(rowData);
